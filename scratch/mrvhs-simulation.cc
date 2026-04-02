@@ -170,6 +170,14 @@ main(int argc, char* argv[])
     // -----------------------------------------------------------------------
     Config::SetDefault("ns3::TcpL4Protocol::SocketType", TypeIdValue(tcpTid));
     Config::SetDefault("ns3::TcpSocketBase::WindowScaling", BooleanValue(true));
+    if (tcpType == "ns3::TcpMrvhsOpt") {
+    Config::SetDefault("ns3::TcpMrvhsOpt::CwndFormula",  StringValue("logdamp"));
+    Config::SetDefault("ns3::TcpMrvhsOpt::AdaptiveBeta", BooleanValue(true));
+    Config::SetDefault("ns3::TcpMrvhsOpt::EcnReaction",  BooleanValue(true));
+    // Also enable ECN globally:
+    Config::SetDefault("ns3::TcpSocketBase::UseEcn", 
+                       StringValue("On"));
+}
     
     // 1. Massive TCP Buffers for 10Gbps @ 100ms RTT
     Config::SetDefault("ns3::TcpSocket::RcvBufSize", UintegerValue(50 * 1024 * 1024));
